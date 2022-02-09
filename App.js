@@ -1,16 +1,25 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import LNB from "./component/LNB";
+import "react-native-gesture-handler";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
+import Week from "./component/Week";
+import AddRutin from "./component/AddRutin";
+import Tutorial from "./component/Tutorial";
 import FNB from "./component/FNB";
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <LNB />
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <NavigationContainer>
+      <Drawer.Navigator drawerType="front" initialRouteName="Week">
+        <Drawer.Screen name="Week" component={Week} />
+        <Drawer.Screen name="AddRutin" component={AddRutin} />
+        <Drawer.Screen name="Tutorial" component={Tutorial} />
+      </Drawer.Navigator>
       <FNB />
-    </View>
+    </NavigationContainer>
   );
 }
 
