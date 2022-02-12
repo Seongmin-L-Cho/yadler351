@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text, View, TextInput } from "react-native";
 import { useState } from "react";
 
 export default function InputBox({ onChange, value, name }) {

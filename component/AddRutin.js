@@ -1,6 +1,8 @@
-import { Text, View } from "react-native";
+import { Text, View, Alert } from "react-native";
 import { useState } from "react";
 import InputBox from "./common/InputBox";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export default function AddRutin() {
   const [inputs, setInputs] = useState({
     squart: 0,
@@ -19,6 +21,40 @@ export default function AddRutin() {
     });
   };
 
+  // handleRoundStack = async (roundStack, newRound) => {
+
+  // };
+
+  const handleRoundStack = async () => {
+    const round = AsyncStorage.getItem("@roundStack");
+    let roundStack = JSON.parse(round || []);
+    let newRound = roundStack[roundStack.length - 1] + 1 || 1;
+    roundStack.push(newRound);
+    return roundStack;
+  };
+
+  const handleSubmit = async () => {
+    const roundStack = handleRoundStack();
+    const newRound = roundStack[roundStack.length - 1];
+    const rmSet = {
+      round: newRound,
+      squart: inputs.squart,
+      deadList: inputs.deadList,
+      benchPress: inputs.benchPress,
+      militaryPress: inputs.militaryPress,
+    };
+
+    const roundStackPair = ["@roundStack", JSON.stringify(roundStack)];
+    const rutinPair = [`@${newRound}rutin`, JSON.stringify(rmSet)];
+
+    try {
+      await AsyncStorage.multiSet([roundStackPair, rutinPair]);
+    } catch (e) {
+      console.log(e);
+      Alert.alert("루틴 생성에 실패했습니다");
+    }
+  };
+
   return (
     <>
       <View>
@@ -33,6 +69,9 @@ export default function AddRutin() {
             <InputBox name={name} onChange={onChange} />
           ))}
         </View>
+      </View>
+      <View>
+        <Button onPress={handleSubmit} title="루틴 생성" color="#841584" />
       </View>
     </>
   );

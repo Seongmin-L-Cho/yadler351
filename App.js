@@ -7,16 +7,30 @@ import Week from "./component/Week";
 import AddRutin from "./component/AddRutin";
 import Tutorial from "./component/Tutorial";
 import FNB from "./component/FNB";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
+  const roundStack = JSON.parse(AsyncStorage.getItem("@roundStack"));
+
+  // if (!roundStack) {
+  //   roundStack= [1]
+  //   AsyncStorage.setItem("@roundStack", JSON.stringify(roundStack));
+
+  // }
+
   return (
     <NavigationContainer>
       <Drawer.Navigator drawerType="front" initialRouteName="Week">
-        <Drawer.Screen name="Week" component={Week} />
-        <Drawer.Screen name="AddRutin" component={AddRutin} />
-        <Drawer.Screen name="Tutorial" component={Tutorial} />
+        <Drawer.Screen name="루틴추가" component={AddRutin} />
+        <Drawer.Screen name="튜토리얼" component={Tutorial} />
+        {roundStack?.map((round) => {
+          <Drawer.Screen
+            name={`${round}Week`}
+            children={({ navigation }) => <Week round={round} />}
+          />;
+        })}
       </Drawer.Navigator>
       <FNB />
     </NavigationContainer>
