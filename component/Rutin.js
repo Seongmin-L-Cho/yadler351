@@ -12,9 +12,13 @@ export default function Rutin() {
   //   benchPress: getItem("@benchPress"),
   //   militaryPress: getItem("@militaryPress"),
   // });
-  const { squart, deadLift, benchPress, militaryPress } = values;
+  // const { squart, deadLift, benchPress, militaryPress } = values;
 
-  const list = ["스쿼트", "데드리프트", "벤치프레스", "밀리터리 프레스"];
+  // const list = ["스쿼트", "데드리프트", "벤치프레스", "밀리터리 프레스"];
 
-  return <View></View>;
+  return (
+    <View>
+      <Text>루티이인</Text>
+    </View>
+  );
 }
