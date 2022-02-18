@@ -3,10 +3,11 @@ import React from "react";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { connect } from "react-redux";
+import { add } from "../redux/store";
 import { Alert, StyleSheet, Text, View } from "react-native";
 
-export default function CustomDrawerContent(props) {
-  const [roundStack, setRoundStack] = useState([]);
+function CustomDrawerContent({ roundStack, addRoundStack }) {
   useEffect(() => {
     async function getRoundStack() {
       try {
@@ -32,7 +33,7 @@ export default function CustomDrawerContent(props) {
 
     console.log("drawer");
     console.log(roundStack);
-  }, [roundStack]);
+  });
 
   return (
     <>
@@ -57,3 +58,18 @@ export default function CustomDrawerContent(props) {
     </>
   );
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setRoundStack: (text) => dispatch(set(text)),
+  };
+}
+
+function mapStateToProps(state) {
+  return { roundStack: state };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CustomDrawerContent);

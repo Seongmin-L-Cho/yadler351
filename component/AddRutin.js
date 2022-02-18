@@ -2,8 +2,10 @@ import { Text, View, Alert, Button } from "react-native";
 import { useState } from "react";
 import InputBox from "./common/InputBox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { connect } from "react-redux";
+import { add } from "../redux/store";
 
-export default function AddRutin({ navigation }) {
+function AddRutin({ navigation }) {
   const [inputs, setInputs] = useState({
     squart: 0,
     deadLift: 0,
@@ -79,6 +81,7 @@ export default function AddRutin({ navigation }) {
       console.log(e);
       Alert.alert("루틴 생성에 실패했습니다");
     }
+    addRoundStack(newRound);
     navigation.jumpTo("Rutin");
   };
 
@@ -109,3 +112,15 @@ export default function AddRutin({ navigation }) {
     </>
   );
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addRoundStack: (text) => dispatch(add(text)),
+  };
+}
+
+function mapStateToProps(state) {
+  return { roundStack: state };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(addRutin);
