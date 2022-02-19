@@ -2,19 +2,19 @@ import { StatusBar } from "expo-status-bar";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import "react-native-gesture-handler";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { DrawerNavigator } from "react-navigation";
 import { NavigationContainer } from "@react-navigation/native";
 import CustomDrawerContent from "./component/drawer/CustomDrawerContent";
 import AddRutin from "./component/AddRutin";
 import Tutorial from "./component/Tutorial";
 import Rutin from "./component/Rutin";
 import FNB from "./component/FNB";
-
+import { Provider } from "react-redux";
+import store from "./component/redux/store";
 const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
-    <>
+    <Provider store={store}>
       <NavigationContainer>
         <Drawer.Navigator
           drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -26,7 +26,7 @@ export default function App() {
 
         <FNB />
       </NavigationContainer>
-    </>
+    </Provider>
   );
 }
 

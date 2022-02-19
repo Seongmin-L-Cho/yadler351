@@ -3,9 +3,9 @@ import { useState } from "react";
 import InputBox from "./common/InputBox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { connect } from "react-redux";
-import { add } from "../redux/store";
+import { add } from "./redux/store";
 
-function AddRutin({ navigation }) {
+function AddRutin({ navigation, addRoundStack }) {
   const [inputs, setInputs] = useState({
     squart: 0,
     deadLift: 0,
@@ -43,11 +43,16 @@ function AddRutin({ navigation }) {
         data;
       })
       .then((value) => {
+        console.log("value");
+        console.log(value);
         round = value;
       })
       .catch((err) => console.log(err));
 
     let roundStack;
+
+    console.log("round");
+    console.log(round);
     if (round) {
       roundStack = JSON.parse(round);
       let newRound = roundStack[roundStack.length - 1] + 1;
@@ -123,4 +128,4 @@ function mapStateToProps(state) {
   return { roundStack: state };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(addRutin);
+export default connect(mapStateToProps, mapDispatchToProps)(AddRutin);

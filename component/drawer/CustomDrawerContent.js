@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { add } from "../redux/store";
 import { Alert, StyleSheet, Text, View } from "react-native";
 
-function CustomDrawerContent({ roundStack, addRoundStack }) {
+function CustomDrawerContent(props) {
   useEffect(() => {
     async function getRoundStack() {
       try {
@@ -32,7 +32,7 @@ function CustomDrawerContent({ roundStack, addRoundStack }) {
       });
 
     console.log("drawer");
-    console.log(roundStack);
+    console.log(props.roundStack);
   });
 
   return (
@@ -46,11 +46,12 @@ function CustomDrawerContent({ roundStack, addRoundStack }) {
           label="Tutorial"
           onPress={() => props.navigation.navigate("Tutorial")}
         />
-        {roundStack?.map((round) => {
+        {props.roundStack?.map((round) => {
           return (
             <DrawerItem
               label={`${round}Rutin`}
               onPress={() => props.navigation.navigate("Rutin", { round })}
+              key={round}
             />
           );
         })}
