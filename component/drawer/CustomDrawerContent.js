@@ -8,31 +8,43 @@ import { add } from "../redux/store";
 import { Alert, StyleSheet, Text, View } from "react-native";
 
 function CustomDrawerContent(props) {
-  useEffect(() => {
-    async function getRoundStack() {
-      try {
-        const round = await AsyncStorage.getItem("@roundStack");
-        if (round !== null) {
-          return round;
-        }
-      } catch (e) {
-        console.log(e);
-        Alert.alert("AsyncStorage 실패");
-      }
-    }
+  const [roundStack, setRoundStack] = useState();
+  // https://stackoverflow.com/questions/60313089/setting-state-along-with-asyncstorage-in-useeffect-hook-causes-infinite-loop
+  // useEffect(() => {
+  //   async function getRoundStack() {
+  //     try {
+  //       const round = await AsyncStorage.getItem("@roundStack");
+  //       console.log("엥??");
+  //       console.log(round);
+  //       if (round !== null) {
+  //         setRoundStack(JSON.parse(round));
+  //       }
+  //     } catch (e) {
+  //       console.log(e);
+  //       Alert.alert("AsyncStorage 실패");
+  //     }
+  //   }
 
-    getRoundStack()
-      .then((data) => {
-        data;
-      })
-      .then((value) => {
-        if (value) {
-          setRoundStack(JSON.parse(value));
-        }
-      });
+  //   const temp = getRoundStack();
+    // .then((data) => {
+    //   console.log("dfdfdfdfdfdf");
 
-    console.log("drawer");
-    console.log(props.roundStack);
+    //   console.log(data);
+    // })
+    // .then((value) => {
+    //   console.log(value);
+    //   if (value) {
+    //     // props.setRoundStack(JSON.parse(value));
+
+    //     setRoundStack(JSON.parse(value));
+    //   }
+    // });
+
+    console.log(temp);
+    let temp2;
+    temp.then((value) => value).then((value2) => (temp2 = value2));
+    console.log("ddfdfdrawefdfdr");
+    console.log("dfdfdf", temp2);
   });
 
   return (
@@ -46,7 +58,7 @@ function CustomDrawerContent(props) {
           label="Tutorial"
           onPress={() => props.navigation.navigate("Tutorial")}
         />
-        {props.roundStack?.map((round) => {
+        {roundStack?.map((round) => {
           return (
             <DrawerItem
               label={`${round}Rutin`}
