@@ -13,15 +13,14 @@ function AddRutin({ navigation, addRoundStack }) {
     militaryPress: 0,
   });
 
-  const [a, setA] = useState();
-  const { squart, deadLift, benchPress, militaryPress } = inputs;
+  // const { squart, deadLift, benchPress, militaryPress } = inputs;
   const list = ["스쿼트", "데드리프트", "벤치프레스", "밀리터리 프레스"];
 
   const onChange = (e) => {
     const { value, name } = e.target;
     setInputs({
       ...inputs,
-      [name]: value,
+      name: value,
     });
   };
 
@@ -37,20 +36,8 @@ function AddRutin({ navigation, addRoundStack }) {
   };
 
   const handleRoundStack = async () => {
-    let round;
-    await getAsyncItem("@roundStack")
-      .then((data) => {
-        data;
-      })
-      .then((value) => {
-        console.log("value");
-        console.log(value);
-        round = value;
-      })
-      .catch((err) => console.log(err));
-
+    const round = await getAsyncItem("@roundStack");
     let roundStack;
-
     console.log("round");
     console.log(round);
     if (round) {
@@ -77,9 +64,7 @@ function AddRutin({ navigation, addRoundStack }) {
 
     const roundStackPair = ["@roundStack", JSON.stringify(roundStack)];
     const rutinPair = [`@${newRound}rutin`, JSON.stringify(rmSet)];
-    console.log("submit");
-    console.log(roundStackPair);
-    console.log(rutinPair);
+
     try {
       await AsyncStorage.multiSet([roundStackPair, rutinPair]);
     } catch (e) {

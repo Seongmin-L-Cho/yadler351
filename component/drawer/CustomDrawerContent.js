@@ -9,43 +9,22 @@ import { Alert, StyleSheet, Text, View } from "react-native";
 
 function CustomDrawerContent(props) {
   const [roundStack, setRoundStack] = useState();
-  // https://stackoverflow.com/questions/60313089/setting-state-along-with-asyncstorage-in-useeffect-hook-causes-infinite-loop
-  // useEffect(() => {
-  //   async function getRoundStack() {
-  //     try {
-  //       const round = await AsyncStorage.getItem("@roundStack");
-  //       console.log("엥??");
-  //       console.log(round);
-  //       if (round !== null) {
-  //         setRoundStack(JSON.parse(round));
-  //       }
-  //     } catch (e) {
-  //       console.log(e);
-  //       Alert.alert("AsyncStorage 실패");
-  //     }
-  //   }
+  useEffect(() => {
+    async function getRoundStack() {
+      try {
+        const round = await AsyncStorage.getItem("@roundStack");
+        if (round !== null) {
+          setRoundStack(JSON.parse(round));
+        }
+      } catch (e) {
+        console.log(e);
+        Alert.alert("AsyncStorage 실패");
+      }
+    }
 
-  //   const temp = getRoundStack();
-    // .then((data) => {
-    //   console.log("dfdfdfdfdfdf");
-
-    //   console.log(data);
-    // })
-    // .then((value) => {
-    //   console.log(value);
-    //   if (value) {
-    //     // props.setRoundStack(JSON.parse(value));
-
-    //     setRoundStack(JSON.parse(value));
-    //   }
-    // });
-
-    console.log(temp);
-    let temp2;
-    temp.then((value) => value).then((value2) => (temp2 = value2));
-    console.log("ddfdfdrawefdfdr");
-    console.log("dfdfdf", temp2);
-  });
+    console.log("dfdf");
+    getRoundStack();
+  }, []);
 
   return (
     <>
@@ -58,7 +37,7 @@ function CustomDrawerContent(props) {
           label="Tutorial"
           onPress={() => props.navigation.navigate("Tutorial")}
         />
-        {roundStack?.map((round) => {
+        {props.roundStack?.map((round) => {
           return (
             <DrawerItem
               label={`${round}Rutin`}
